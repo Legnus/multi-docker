@@ -13,3 +13,8 @@ after-success:
     - docker build -t legnus/multi-nginx ./nginx
     - docker build -t legnus/multi-server ./server
     - docker build -t legnus/multi-worker ./worker
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push legnus/multi-client
+    - docker push legnus/multi-nginx
+    - docker push legnus/multi-server
+    - docker push legnus/multi-worker
