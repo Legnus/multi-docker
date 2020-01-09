@@ -1,0 +1,15 @@
+sudo: required
+services:
+    - docker 
+
+before_install:
+    - docker build -t legnus/react-test -f./client/Dockerfile.dev ./client
+    
+script:
+    - docker run legnus/react-test npm test -- --coverage
+
+after-success:
+    - docker build -t legnus/multi-client ./client
+    - docker build -t legnus/multi-nginx ./nginx
+    - docker build -t legnus/multi-server ./server
+    - docker build -t legnus/multi-worker ./worker
